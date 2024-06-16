@@ -1,7 +1,7 @@
 # pip install streamlit langchain langchain-openai beautifulsoup4 python-dotenv chromadb elevenlabs
 
 from elevenlabs.client import ElevenLabs
-from elevenlabs import play
+from elevenlabs import play, save
 import streamlit as st
 from langchain_core.messages import AIMessage, HumanMessage
 from langchain_community.document_loaders import WebBaseLoader
