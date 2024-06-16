@@ -3,6 +3,7 @@
 from elevenlabs.client import ElevenLabs
 from elevenlabs import play, save
 import streamlit as st
+import base64
 from langchain_core.messages import AIMessage, HumanMessage
 from langchain_community.document_loaders import WebBaseLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
@@ -101,7 +102,23 @@ else:
             output_format= "mp3_22050_32"
         )
         save(audio, "audio.mp3")
-        st.audio("audio.mp3", format = "audio/mp3", autoplay = True)
+
+        def autoplay_audio(file_path: str):
+            with open(file_path, "rb") as f:
+                data = f.read()
+                b64 = base64.b64encode(data).decode()
+                md = f"""
+                    <audio controls autoplay="true">
+                    <source src="data:audio/mp3;base64,{b64}" type="audio/mp3">
+                    </audio>
+                    """
+                st.markdown(
+                    md,
+                    unsafe_allow_html=True,
+                )
+        autoplay_audio("audio.mp3")
+  
+        #st.audio("audio.mp3", format = "audio/mp3", autoplay = True)
   
     if "vector_store" not in st.session_state:
         st.session_state.vector_store = get_vectorstore_from_url(website_url)    
@@ -119,7 +136,23 @@ else:
             output_format= "mp3_22050_32"
         )
         save(voice_response, "response.mp3")
-        st.audio("response.mp3", format = "audio/mp3", autoplay = True)
+
+        def autoplay_audio(file_path: str):
+            with open(file_path, "rb") as f:
+                data = f.read()
+                b64 = base64.b64encode(data).decode()
+                md = f"""
+                    <audio controls autoplay="true">
+                    <source src="data:audio/mp3;base64,{b64}" type="audio/mp3">
+                    </audio>
+                    """
+                st.markdown(
+                    md,
+                    unsafe_allow_html=True,
+                )
+        autoplay_audio("response.mp3")
+  
+        #st.audio("response.mp3", format = "audio/mp3", autoplay = True)
        
 
     # conversation
