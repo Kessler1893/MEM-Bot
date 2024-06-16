@@ -97,9 +97,12 @@ else:
         audio = client.generate(
             text = "Hallo, ich bin der MEM-Bot. Wie kann ich dir weiterhelfen?",
             voice = "Rachel",
-            model = "eleven_multilingual_v2"
+            model = "eleven_multilingual_v2",
+            output_format= "mp3_22050_32"
         )
-        play(audio)
+        save(audio, "audio.mp3")
+        st.audio("audio.mp3", format = "audio/mp3", autoplay = True)
+  
     if "vector_store" not in st.session_state:
         st.session_state.vector_store = get_vectorstore_from_url(website_url)    
 
@@ -112,10 +115,11 @@ else:
         voice_response = client.generate(
             text = response,
             voice = "Rachel",
-            model = "eleven_multilingual_v2"
+            model = "eleven_multilingual_v2",
+            output_format= "mp3_22050_32"
         )
-        play(voice_response)
-        
+        save(voice_response, "response.mp3")
+        st.audio("response.mp3", format = "audio/mp3", autoplay = True)
        
 
     # conversation
